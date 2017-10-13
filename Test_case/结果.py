@@ -14,5 +14,6 @@ filename = 'D:\\UI_Test\\Test_Presentation\\result.html'
 fp = open(filename, 'wb')
 #runner=HTMLTestRunner.HTMLTestRunner(stream=fp,title='Test Report',description=u'Result:')
 runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='Report_title', description='Report_description')
+
 # 执行测试用例
 runner.run(testunit)

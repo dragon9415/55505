@@ -5,6 +5,7 @@
 from selenium import webdriver
 from datetime import datetime
 import unittest, time, re
+from login_data import cms_Login
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -36,57 +37,52 @@ class CMS(unittest.TestCase):
             driver.find_element_by_id("pra")  # 获取异常信息的元素
         except:
             driver.get_screenshot_as_file(u"D:/UI_Test/error_png/%s登录.png" % datetime.now().strftime("%Y%m%d.%H%M%S.%f")[:-3])  # 当获取不到上面的元素时就会截图当前界面，如果能获取到就不会截图
-        driver.close()
+        self.driver.close()
 
     def test_cms_personal(self):
         u"""个人中心"""
-        driver = self.driver
-        driver.get(self.base_url + '/')
-        driver.find_element_by_link_text("亲，请登录").click()
-        driver.find_element_by_id("username").send_keys("qiye008")
-        driver.find_element_by_id("password").send_keys("123456")
+        self.driver.get(self.base_url + '/')
+        cms_Login(self.driver)
         time.sleep(2)
-        driver.find_element_by_xpath("//*[@type='button']").click()  # 点击登录
+        self.driver.find_element_by_link_text("个人中心").click()
         time.sleep(2)
-        driver.find_element_by_link_text("个人中心").click()
-        time.sleep(2)
-        driver.find_element_by_link_text("个人信息").click()
+        self.driver.find_element_by_link_text("个人信息").click()
         time.sleep(2)
         js = "window.scrollTo(0,document.body.scrollHeight)"  # 滚动条滚到底部
-        driver.execute_script(js)
+        self.driver.execute_script(js)
         time.sleep(2)
         try:
-            driver.find_element_by_value("企业008")
-        except:
-            driver.get_screenshot_as_file(u"D:/UI_Test/error_png/%s.png" % datetime.now().strftime("%Y%m%d.%H%M%S.%f")[:-3])
+            self.driver.find_element_by_value("企业008")
+        except Exception as e:
+            self.driver.get_screenshot_as_file(u"D:/UI_Test/error_png/%s.png" % datetime.now().strftime("%Y%m%d.%H%M%S.%f")[:-3])
         time.sleep(2)
-        driver.find_element_by_link_text("资料查看").click()
+        self.driver.find_element_by_link_text("资料查看").click()
         try:
-            driver.find_element_by_style("color: green;")
-        except:
-            driver.get_screenshot_as_file(u"D:/UI_Test/error_png/%s.png" % datetime.now().strftime("%Y%m%d.%H%M%S.%f")[:-3])
+            self.driver.find_element_by_style("color: green;")
+        except Exception as e:
+            self.driver.get_screenshot_as_file(u"D:/UI_Test/error_png/%s.png" % datetime.now().strftime("%Y%m%d.%H%M%S.%f")[:-3])
 
         time.sleep(2)
-        driver.find_element_by_link_text("优惠信息").click()
+        self.driver.find_element_by_link_text("优惠信息").click()
         try:
-            driver.find_element_by_style("0.0%")
+            self.driver.find_element_by_style("0.0%")
         except:
-            driver.get_screenshot_as_file(u"D:/UI_Test/error_png/%s.png" % datetime.now().strftime("%Y%m%d.%H%M%S.%f")[:-3])
+            self.driver.get_screenshot_as_file(u"D:/UI_Test/error_png/%s.png" % datetime.now().strftime("%Y%m%d.%H%M%S.%f")[:-3])
         time.sleep(2)
-        driver.find_element_by_link_text('订单管理').click()
+        self.driver.find_element_by_link_text('订单管理').click()
         time.sleep(2)
         js = "window.scrollTo(0,document.body.scrollHeight)"  # 滚动拉到页面顶部
-        driver.execute_script(js)
+        self.driver.execute_script(js)
         time.sleep(2)
-        driver.find_element_by_link_text('尾页').click()
+        self.driver.find_element_by_link_text('尾页').click()
         time.sleep(2)
-        driver.find_element_by_link_text('个人返利金').click()
+        self.driver.find_element_by_link_text('个人返利金').click()
         js = "window.scrollTo(500,document.body.scrollHeight)"  # 滚动拉到页面中部
-        driver.execute_script(js)
+        self.driver.execute_script(js)
         time.sleep(3)
-        driver.find_element_by_link_text('评价商品').click()
+        self.driver.find_element_by_link_text('评价商品').click()
         time.sleep(3)
-        driver.close()
+        self.driver.close()
 
     def test_cms_set(self):
         u"""点击分类栏"""
@@ -123,12 +119,7 @@ class CMS(unittest.TestCase):
         u"""立即购买"""
         driver = self.driver
         driver.get(self.base_url + '/')
-        driver.find_element_by_link_text("亲，请登录").click()
-        time.sleep(1)
-        driver.find_element_by_id("username").send_keys("qiye008")
-        driver.find_element_by_id("password").send_keys("123456")
-        time.sleep(1)
-        driver.find_element_by_xpath("//*[@type='button']").click()  # 点击登录
+        cms_Login(self.driver)
         time.sleep(1)
         driver.find_elements_by_css_selector("[class='list']").pop(0).click()  # 选择首页的商品
         time.sleep(1)
@@ -149,12 +140,7 @@ class CMS(unittest.TestCase):
         u"""加入购物车"""
         driver = self.driver
         driver.get(self.base_url + '/')
-        driver.find_element_by_link_text("亲，请登录").click()
-        time.sleep(1)
-        driver.find_element_by_id("username").send_keys("qiye008")
-        driver.find_element_by_id("password").send_keys("123456")
-        time.sleep(1)
-        driver.find_element_by_xpath("//*[@type='button']").click()  # 点击登录
+        cms_Login(self.driver)
         time.sleep(1)
         driver.find_elements_by_css_selector("[class='list']").pop(0).click() #
         time.sleep(1)
@@ -166,11 +152,7 @@ class CMS(unittest.TestCase):
         u"""进入购物车进行结算"""
         driver = self.driver
         driver.get(self.base_url + '/')
-        driver.find_element_by_link_text("亲，请登录").click()
-        driver.find_element_by_id("username").send_keys("qiye008")
-        driver.find_element_by_id("password").send_keys("123456")
-        time.sleep(1)
-        driver.find_element_by_xpath("//*[@type='button']").click()  # 点击登录
+        cms_Login(self.driver)
         time.sleep(1)
         driver.find_element_by_id("mc-menu-hd").click()  #进入购物车
         time.sleep(2)
@@ -195,3 +177,4 @@ class CMS(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+'''
