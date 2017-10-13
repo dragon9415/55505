@@ -20,7 +20,7 @@ class SendMail(object):
     def __init__(self, recver=None):
         """接收邮件的人：list or tuple"""
         if recver is None:
-            self.sendTo = ['22515932@qq.com']  # 收件人这个参数，可以是list，或者tulp，以便发送给多人
+            self.sendTo = ['xxxxx@qq.com']  # 收件人这个参数，可以是list，或者tulp，以便发送给多人
         else:
             self.sendTo = recver
 
@@ -50,12 +50,12 @@ class SendMail(object):
 
     def send(self):
         self.take_messages()
-        self.msg['from'] = '365880229@qq.com'  # 发送邮件的人
-        self.msg['to'] = '22515932@qq.com'     # 收件人和发送人必须这里定义一下，执行才不会报错。
+        self.msg['from'] = 'xxxxxqq.com'  # 发送邮件的人
+        self.msg['to'] = 'xxxxxx@qq.com'     # 收件人和发送人必须这里定义一下，执行才不会报错。
         smtp = smtplib.SMTP_SSL('smtp.qq.com', 465)  # 连接服务器
       #  smtp = smtplib.SMTP()
         smtp.connect('smtp.qq.com')
-        smtp.login('365880229@qq.com', 'fpilclsxumiobifh')  # 登录的用户名和密码（注意密码是设置客户端授权码，因为使用用户密码不稳听，有时无法认证成功，导致登录不上，故无法发送邮件。）
+        smtp.login('xxxxxx@qq.com', 'xxxxxxxxx密码')  # 登录的用户名和密码（注意密码是设置客户端授权码，因为使用用户密码不稳听，有时无法认证成功，导致登录不上，故无法发送邮件。）
         smtp.sendmail(self.msg['from'], self.msg['to'], self.msg.as_string())  # 发送邮件
         smtp.close()
         print('sendmail success')
